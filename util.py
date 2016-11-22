@@ -11,10 +11,7 @@
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
-import sys
-import inspect
 import heapq, random
-import cStringIO
 
 class Stack:
     "A container with a last-in-first-out (LIFO) queuing policy."
@@ -99,7 +96,7 @@ class PriorityQueueWithFunction(PriorityQueue):
     def push(self, item):
         "Adds an item to the queue with priority from the priority function"
         PriorityQueue.push(self, item, self.priorityFunction(item))
-        
+
 def flipCoin( p ):
     r = random.random()
     return r < p
