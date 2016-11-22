@@ -4,6 +4,7 @@ Goal: Improve upon naive-BFS on social graphs with a homemade, trained heuristic
 
 TODO:
 - Graph generation
+  - Adjaceny list/matrix?
 - Naive BFS
 - Heuristic training
 - A\* with heurisic
