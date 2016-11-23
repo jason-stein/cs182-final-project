@@ -3,13 +3,14 @@ import searchAgents as search
 import time
 import sys
 
-n = 10
+n = 100
 
 graph = generate.SocialGraph()
 
 start = time.time()
 avg1 = 0.0
 n1 = n
+
 for i in xrange(n):
 	# separation = len(search.BFS(random.choice(graph.students),random.choice(graph.students),graph))
 	separation = len(search.BFS(graph.students[i],graph.students[i+1],graph))
@@ -17,7 +18,9 @@ for i in xrange(n):
 		avg1 += separation
 	else:
 		n1 -= 1
-	sys.stdout.write("BFS iter " + str(i+1) + "\r")
+
+	progress = '|' + '.' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
+	sys.stdout.write("BFS iter " + str(i+1) + '   ' + progress + "\r")
 	sys.stdout.flush()
 avg1 = avg1 / n1
 end = time.time()
@@ -34,7 +37,8 @@ for i in xrange(n):
 		avg2 += separation
 	else:
 		n2 -= 1
-	sys.stdout.write("aStar iter " + str(i+1) + "\r")
+	progress = '|' + '.' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
+	sys.stdout.write("aStar iter " + str(i+1) + ' ' + progress + "\r")
 	sys.stdout.flush()
 avg2 = avg2 / n2
 end = time.time()
