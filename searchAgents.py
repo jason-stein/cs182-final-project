@@ -20,14 +20,18 @@ def BFS(s1,s2,graph):
 		for i in xrange(len(graph.adjMatrix[node[0]])):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
+	return []
 
 def nullHeuristic(state,graph):
 	return 0
 
 def aStar(s1,s2,graph,heuristic = nullHeuristic):
 
+	# frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]) 
+	# 	+ heuristic(x[0],graph))
 	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]) 
-		+ heuristic(x[0],graph))
+		+ 0)
+
 	visited = set()
 	frontier.push((s1.id,[s1.id]))
 
@@ -42,3 +46,4 @@ def aStar(s1,s2,graph,heuristic = nullHeuristic):
 		for i in xrange(len(graph.adjMatrix[node[0]])):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
+	return []
