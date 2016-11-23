@@ -25,12 +25,10 @@ def BFS(s1,s2,graph):
 def nullHeuristic(state,graph):
 	return 0
 
-def aStar(s1,s2,graph,heuristic = nullHeuristic):
+def aStar(s1,s2,graph):
 
-	# frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]) 
-	# 	+ heuristic(x[0],graph))
 	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]) 
-		+ 0)
+		+ graph.heuristicMatrix[x[0]][s2.id])
 
 	visited = set()
 	frontier.push((s1.id,[s1.id]))
