@@ -2,12 +2,13 @@
 
 import random
 import util
+import sys
 
 HOUSE_PROB_INC = .4
 INTEREST_PROB_INC = .1
 YEAR_PROB_INC = .1
 BASE_PROB = .05
-NSTUDENTS = 1000
+NSTUDENTS = 2000
 
 
 class Student:
@@ -89,10 +90,11 @@ class SocialGraph:
 			print i
 
 	def train(self, iterations):
-		for _ in xrange(iterations):
+		for i in xrange(iterations):
+			sys.stdout.write("Training: " + str(i+1) + "\r")
+			sys.stdout.flush()
 			p1 = random.randint(0, len(self.students)-1)
 			p2 = random.randint(0, len(self.students)-1)
-			print p2
 			while p1 == p2:
 				p2 = random.randint(0, len(self.students)-1)
 			s1 = self.students[p1]
@@ -104,3 +106,4 @@ class SocialGraph:
 				# Push p2 away
 				changeDistance(s1, s2, False)
 			self.heuristicMatrix[s1.id][s2.id] = self.heuristicMatrix[s2.id][s1.id] = util.cartesianDistance(s1.pos, s2.pos)
+		print ""
