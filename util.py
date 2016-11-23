@@ -107,26 +107,3 @@ def cartesianDistance(point1, point2):
     x2 = point2[0]
     y2 = point2[1]
     return ((x2-x1)**2 + (y2-y1)**2)**0.5
-
-def changeDistance(student1, student2, friends):
-    dx = student2.pos[0] - student1.pos[0]
-    dy = student2.pos[1] - student1.pos[1]
-    change = 1.0
-    if friends:
-        change = 0.9
-    else:
-        change = 1.1
-    new_dx = dx * change
-    new_dy = dy * change
-    new_x = student1.pos[0] + new_dx
-    new_y = student1.pos[1] + new_dy
-    if new_x > 1.0:
-        new_x = 1.0
-    if new_x < 0.0:
-        new_x = 0.0
-    if new_y > 1.0:
-        new_y = 1.0
-    if new_y < 0.0:
-        new_y = 0.0
-
-    student2.pos = [new_x, new_y] 
