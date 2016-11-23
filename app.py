@@ -3,7 +3,7 @@ import searchAgents as search
 import time
 import sys
 
-n = 100
+n = 25
 
 graph = generate.SocialGraph()
 
@@ -19,7 +19,7 @@ for i in xrange(n):
 	else:
 		n1 -= 1
 
-	progress = '|' + '.' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
+	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
 	sys.stdout.write("BFS iter " + str(i+1) + '   ' + progress + "\r")
 	sys.stdout.flush()
 avg1 = avg1 / n1
@@ -37,7 +37,7 @@ for i in xrange(n):
 		avg2 += separation
 	else:
 		n2 -= 1
-	progress = '|' + '.' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
+	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
 	sys.stdout.write("aStar iter " + str(i+1) + ' ' + progress + "\r")
 	sys.stdout.flush()
 avg2 = avg2 / n2
