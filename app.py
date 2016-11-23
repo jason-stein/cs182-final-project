@@ -1,6 +1,7 @@
 import util, generate, random
 import searchAgents as search
 import time
+import sys
 
 n = 10
 
@@ -16,7 +17,8 @@ for i in xrange(n):
 		avg1 += separation
 	else:
 		n1 -= 1
-	print 'BFS iter:', i+1
+	sys.stdout.write("BFS iter " + str(i+1) + "\r")
+	sys.stdout.flush()
 avg1 = avg1 / n1
 end = time.time()
 diff1 = end - start
@@ -32,7 +34,8 @@ for i in xrange(n):
 		avg2 += separation
 	else:
 		n2 -= 1
-	print 'aStar iter:', i+1
+	sys.stdout.write("aStar iter " + str(i+1) + "\r")
+	sys.stdout.flush()
 avg2 = avg2 / n2
 end = time.time()
 diff2 = end - start

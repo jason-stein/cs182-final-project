@@ -29,7 +29,7 @@ def aStar(s1,s2,graph):
 
 	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]) 
 		+ graph.heuristicMatrix[x[0]][s2.id])
-
+	
 	visited = set()
 	frontier.push((s1.id,[s1.id]))
 
