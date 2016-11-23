@@ -7,7 +7,7 @@ HOUSE_PROB_INC = .4
 INTEREST_PROB_INC = .1
 YEAR_PROB_INC = .1
 BASE_PROB = .05
-NSTUDENTS = 100
+NSTUDENTS = 2000
 
 class Student:
 
@@ -19,8 +19,8 @@ class Student:
 		self.interest = random.choice(["academics","arts","sports"])
 		self.year = random.choice([17,18,19,20])
 
-def maybeFriends(s1,s2):
-	p = BASE_PROB
+def maybeFriends(s1,s2):		# randomly decides if s1, s2 friends based on 
+	p = BASE_PROB				# shared characteristics
 	if s1.house == s2.house:
 		p += HOUSE_PROB_INC
 	if s1.interest == s2.interest:
