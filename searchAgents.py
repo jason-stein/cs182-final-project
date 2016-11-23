@@ -5,7 +5,7 @@ import generate
 
 def BFS(s1,s2,graph):
 
-	frontier = util.Queue()
+	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]))
 	visited = set()
 	frontier.push((s1.id,[s1.id]))
 
