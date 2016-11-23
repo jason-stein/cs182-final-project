@@ -6,6 +6,7 @@ import sys
 n = 25
 
 graph = generate.SocialGraph()
+graph.train(100000)
 
 start = time.time()
 avg1 = 0.0
