@@ -2,6 +2,8 @@
 
 Goal: Improve upon naive-BFS on social graphs with a homemade, trained heuristic (taking inspiration from clustering).
 
+Run using `python app.py`.
+
 TODO:
 - Graph generation - basic done
   - Adjaceny list/matrix?
