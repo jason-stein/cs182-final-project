@@ -3,12 +3,14 @@
 import random
 import util
 import sys
+import matplotlib.pyplot as plt
+
 
 HOUSE_PROB_INC = .4
 INTEREST_PROB_INC = .1
 YEAR_PROB_INC = .1
 BASE_PROB = .05
-NSTUDENTS = 2000
+NSTUDENTS = 1000
 
 
 class Student:
@@ -107,3 +109,10 @@ class SocialGraph:
 				changeDistance(s1, s2, False)
 			self.heuristicMatrix[s1.id][s2.id] = self.heuristicMatrix[s2.id][s1.id] = util.cartesianDistance(s1.pos, s2.pos)
 		print ""
+
+	def plotStudents(self,style):
+		xs = [student.pos[0] for student in self.students]
+		ys = [student.pos[1] for student in self.students]
+		plt.plot(xs,ys,style)
+		plt.axis([0,1,0,1])
+		plt.draw()

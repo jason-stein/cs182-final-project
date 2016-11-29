@@ -2,11 +2,17 @@ import util, generate, random
 import searchAgents as search
 import time
 import sys
+import matplotlib.pyplot as plt
 
 n = 25
 
 graph = generate.SocialGraph()
-graph.train(100000)
+
+graph.plotStudents('ro')
+
+graph.train(3000)
+
+graph.plotStudents('bs')
 
 start = time.time()
 avg1 = 0.0
@@ -49,3 +55,5 @@ print ""
 
 print "BFS -- Time:", diff1, " Avg:", avg1, " Iterations:", n
 print "aStar -- Time:", diff2, " Avg:", avg2, " Iterations:", n
+
+plt.show()
