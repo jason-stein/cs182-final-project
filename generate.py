@@ -26,7 +26,7 @@ class Student:
 			"Winthrop"])
 		self.interest = random.choice(["academics","arts","sports"])
 		self.year = random.choice([17,18,19,20])
-		self.pos = [random.uniform(0,ISQR2), random.uniform(0,ISQR2)]
+		self.pos = [random.uniform(0,1), random.uniform(0,1)]
 
 # randomly decides if s1, s2 friends based on shared characteristics
 def maybeFriends(s1,s2):
@@ -45,21 +45,21 @@ def changeDistance(student1, student2, friends):
     dy = student2.pos[1] - student1.pos[1]
     change = 1.0
     if friends:
-        change = 0.5
+        change = 0.9
     else:
-        change = 1.05
+        change = 1.01
     new_dx = dx * change
     new_dy = dy * change
     new_x = student1.pos[0] + new_dx
     new_y = student1.pos[1] + new_dy
-    if new_x > ISQR2:
-        new_x = ISQR2
-    if new_x < 0.0:
-        new_x = 0.0
-    if new_y > ISQR2:
-        new_y = ISQR2
-    if new_y < 0.0:
-        new_y = 0.0
+    # if new_x > ISQR2:
+    #     new_x = ISQR2
+    # if new_x < 0.0:
+    #     new_x = 0.0
+    # if new_y > ISQR2:
+    #     new_y = ISQR2
+    # if new_y < 0.0:
+    #     new_y = 0.0
 
     student2.pos = [new_x, new_y] 
 
@@ -128,6 +128,10 @@ class SocialGraph:
 			self.heuristicMatrix[s1.id][s2.id] = \
 			self.heuristicMatrix[s2.id][s1.id] = \
 			util.cartesianDistance(s1.pos, s2.pos)
+		maxDist = max(map(lambda x: max(x),self.heuristicMatrix))
+		for i in xrange(NSTUDENTS):
+			for j in xrange(NSTUDENTS):
+				self.heuristicMatrix[i][j] /= maxDist
 		print ""
 
 	# plots each student's position as a point with customizable format string
@@ -135,5 +139,9 @@ class SocialGraph:
 		xs = [student.pos[0] for student in self.students]
 		ys = [student.pos[1] for student in self.students]
 		plt.plot(xs,ys,style)
-		plt.axis([0,ISQR2,0,ISQR2])
+		minx = min(map(lambda x: x.pos[0], self.students))
+		maxx = max(map(lambda x: x.pos[0], self.students))
+		miny = min(map(lambda x: x.pos[1], self.students))
+		maxy = max(map(lambda x: x.pos[1], self.students))
+		plt.axis([minx,maxx,miny,maxy])
 		plt.draw()
