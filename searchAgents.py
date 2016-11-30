@@ -3,7 +3,7 @@
 import util
 import generate
 
-def BFS(s1,s2,graph):
+def UCS(s1,s2,graph):
 
 	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]))
 	visited = set()

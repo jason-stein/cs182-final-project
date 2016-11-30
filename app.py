@@ -15,15 +15,15 @@ start = time.time()
 avg1 = 0.0
 n1 = n
 for i in xrange(n):
-	# separation = len(search.BFS(random.choice(graph.students),random.choice(graph.students),graph))
-	separation = len(search.BFS(graph.students[i],graph.students[i+1],graph))
+	# separation = len(search.UCS(random.choice(graph.students),random.choice(graph.students),graph))
+	separation = len(search.UCS(graph.students[i],graph.students[i+1],graph))
 	if separation != 0:
 		avg1 += separation
 	else:
 		n1 -= 1
 
 	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
-	sys.stdout.write("BFS iter " + str(i+1) + '   ' + progress + "\r")
+	sys.stdout.write("UCS iter " + str(i+1) + '   ' + progress + "\r")
 	sys.stdout.flush()
 avg1 = avg1 / n1
 end = time.time()
@@ -70,7 +70,7 @@ end = time.time()
 diff3 = end - start
 print ""
 
-print "BFS -- Time:", diff1, " Avg:", avg1, " Iterations:", n
+print "UCS -- Time:", diff1, " Avg:", avg1, " Iterations:", n
 print "aStar untrained -- Time:", diff2, " Avg:", avg2, " Iterations:", n
 print "aStar trained -- Time:", diff3, " Avg:", avg3, " Iterations:", n
 
