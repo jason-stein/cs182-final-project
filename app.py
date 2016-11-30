@@ -73,6 +73,7 @@ print ""
 print "UCS -- Time:", diff1, " Avg:", avg1, " Iterations:", n
 print "aStar untrained -- Time:", diff2, " Avg:", avg2, " Iterations:", n
 print "aStar trained -- Time:", diff3, " Avg:", avg3, " Iterations:", n
+print "The average person has", graph.averageFriends(), "friends."
 
 # print "creating graph"
 # G = nx.Graph()

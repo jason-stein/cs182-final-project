@@ -6,11 +6,11 @@ import sys
 import matplotlib.pyplot as plt
 
 # constants for probability increase on shared characteristics
-HOUSE_PROB_INC = .5
-INTEREST_PROB_INC = .1
-YEAR_PROB_INC = .2
+HOUSE_PROB_INC = .1
+INTEREST_PROB_INC = .5
+YEAR_PROB_INC = .01
 BASE_PROB = 0
-NSTUDENTS = 200
+NSTUDENTS = 1000
 
 
 # class for individual student -- contains attributes and location
@@ -21,7 +21,7 @@ class Student:
 		self.house = random.choice(["Adams","Cabot","Currier","Dunster","Eliot",
 			"Kirkland","Leverett","Lowell","Mather","Pforzheimer","Quincy",
 			"Winthrop"])
-		self.interest = random.choice(["academics","arts","sports"])
+		self.interest = random.choice(range(100))
 		self.year = random.choice([17,18,19,20])
 		self.pos = [random.uniform(0,1), random.uniform(0,1)]
 
@@ -42,7 +42,7 @@ def changeDistance(student1, student2, friends):
     dy = student2.pos[1] - student1.pos[1]
     change = 1.0
     if friends:
-        change = 0.9
+        change = 0.5
     else:
         change = 1.01
     new_dx = dx * change
@@ -147,3 +147,8 @@ class SocialGraph:
 		maxy = max(map(lambda x: x.pos[1], self.students))
 		plt.axis([minx,maxx,miny,maxy])
 		plt.draw()
+
+	def averageFriends(self):
+		return float(sum(map(lambda x: sum(x), self.adjMatrix))) \
+			/ float(NSTUDENTS)
+
