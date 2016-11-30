@@ -3,7 +3,6 @@
 import random
 import util
 import sys
-import math
 import matplotlib.pyplot as plt
 
 # constants for probability increase on shared characteristics
@@ -11,10 +10,8 @@ HOUSE_PROB_INC = .5
 INTEREST_PROB_INC = .1
 YEAR_PROB_INC = .2
 BASE_PROB = 0
-NSTUDENTS = 2000
+NSTUDENTS = 200
 
-# inverse square root of 2 -- bound for heuristic grid
-ISQR2 = 1 / math.sqrt(2.0)
 
 # class for individual student -- contains attributes and location
 class Student:
@@ -135,9 +132,14 @@ class SocialGraph:
 		print ""
 
 	# plots each student's position as a point with customizable format string
-	def plotStudents(self,style):
+	def plotStudents(self,style='ro',lines=False):
 		xs = [student.pos[0] for student in self.students]
 		ys = [student.pos[1] for student in self.students]
+		if lines:
+			for i in xrange(NSTUDENTS):
+				for j in xrange(i):
+					if self.adjMatrix[i][j] == 1:
+						plt.plot(self.students[i].pos, self.students[j].pos,'b')
 		plt.plot(xs,ys,style)
 		minx = min(map(lambda x: x.pos[0], self.students))
 		maxx = max(map(lambda x: x.pos[0], self.students))
