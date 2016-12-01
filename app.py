@@ -5,7 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 # import networkx as nx
 
-n = 100
+n = 25
 
 graph = generate.SocialGraph()
 plt.figure(1)
@@ -62,7 +62,7 @@ for i in xrange(n):
 	else:
 		n2 -= 1
 	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
-	sys.stdout.write("aStar untrained iter " + str(i+1) + ' ' + progress + "\r")
+	sys.stdout.write("A* untrained iter " + str(i+1) + ' ' + progress + "\r")
 	sys.stdout.flush()
 avg2 = avg2 / n2
 end = time.time()
@@ -70,7 +70,7 @@ diff2 = end - start
 print ""
 
 
-graph.train(500000)
+graph.train(1000000)
 plt.figure(2)
 plt.title("Trained Locations")
 graph.plotStudents('gs', lines=False)
@@ -85,7 +85,7 @@ for i in xrange(n):
 	else:
 		n3 -= 1
 	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
-	sys.stdout.write("aStar trained iter " + str(i+1) + ' ' + progress + "\r")
+	sys.stdout.write("A* trained iter " + str(i+1) + ' ' + progress + "\r")
 	sys.stdout.flush()
 avg3 = avg3 / n3
 end = time.time()
@@ -94,8 +94,8 @@ print ""
 
 print "BFS -- Time:", diff1, "Avg Separation:", avg1, "Iterations:", n
 print "2-sided BFS -- Time:", diff4, "Avg Separation:", avg4, "Iterations:", n
-print "aStar untrained -- Time:", diff2, "Avg Separation:", avg2, "Iterations:", n
-print "aStar trained -- Time:", diff3, "Avg Separation:", avg3, "Iterations:", n
+print "A* untrained -- Time:", diff2, "Avg Separation:", avg2, "Iterations:", n
+print "A* trained -- Time:", diff3, "Avg Separation:", avg3, "Iterations:", n
 
 # print "creating graph"
 # G = nx.Graph()
