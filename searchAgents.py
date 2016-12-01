@@ -17,13 +17,10 @@ def UCS(s1,s2,graph):
 		if node[0] == s2.id:
 			return node[1]
 
-		for i in xrange(len(graph.adjMatrix[node[0]])):
+		for i in xrange(generate.NSTUDENTS):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
 	return []
-
-def nullHeuristic(state,graph):
-	return 0
 
 def aStar(s1,s2,graph):
 
@@ -41,7 +38,40 @@ def aStar(s1,s2,graph):
 		if node[0] == s2.id:
 			return node[1]
 
-		for i in xrange(len(graph.adjMatrix[node[0]])):
+		for i in xrange(generate.NSTUDENTS):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
+	return []
+
+# 2-sided BFS (expands out from both nodes)
+def BFS2(s1,s2,graph):
+
+	frontier1 = util.PriorityQueueWithFunction(lambda x: len(x[1]))
+	frontier2 = util.PriorityQueueWithFunction(lambda x: len(x[1]))
+	visited1 = set()
+	visited2 = set()
+	frontier1.push((s1.id,[s1.id]))
+	frontier2.push((s2.id,[s2.id]))
+	while not frontier1.isEmpty() and not frontier2.isEmpty():
+		node1 = frontier1.pop()
+		if node1[0] in visited1:
+			continue
+		if node2[0] in visited2:
+			continue
+		node2 = frontier2.pop()
+		visited1.add(node1[0])
+		visited2.add(node2[0])
+		for i in frontier2.heap:
+			if node1[0] == i[2][0]:
+				i[2][1].reverse()
+				return node1[1] + i[2][1][1:]
+		for i in frontier1.heap:
+			if i[2][0] == node2[0]:
+				node2[1].reverse()
+				return i[2][1] + node2[1][1:]
+		for i in xrange(generate.NSTUDENTS):
+			if graph.adjMatrix[node1[0]][i] == 1:
+				frontier1.push((i, node1[1] + [i]))
+			if graph.adjMatrix[node2[0]][i] == 1:
+				frontier2.push((i, node2[1] + [i]))
 	return []

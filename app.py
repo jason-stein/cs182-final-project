@@ -5,11 +5,14 @@ import sys
 import matplotlib.pyplot as plt
 # import networkx as nx
 
-n = 25
+n = 100
+
 graph = generate.SocialGraph()
 plt.figure(1)
 plt.title("Untrained (Random) Locations")
 graph.plotStudents(lines=False)
+print "The average person has", graph.averageFriends(), "friends."
+print "The average person has", graph.averageInterests(), "interests."
 
 start = time.time()
 avg1 = 0.0
@@ -18,16 +21,35 @@ for i in xrange(n):
 	# separation = len(search.UCS(random.choice(graph.students),random.choice(graph.students),graph))
 	separation = len(search.UCS(graph.students[i],graph.students[i+1],graph))
 	if separation != 0:
-		avg1 += separation
+		avg1 += separation - 1
 	else:
 		n1 -= 1
 
 	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
-	sys.stdout.write("UCS iter " + str(i+1) + '   ' + progress + "\r")
+	sys.stdout.write("BFS iter " + str(i+1) + '   ' + progress + "\r")
 	sys.stdout.flush()
 avg1 = avg1 / n1
 end = time.time()
 diff1 = end - start
+print ""
+
+start = time.time()
+avg4 = 0.0
+n4 = n
+for i in xrange(n):
+	# separation = len(search.UCS(random.choice(graph.students),random.choice(graph.students),graph))
+	separation = len(search.UCS(graph.students[i],graph.students[i+1],graph))
+	if separation != 0:
+		avg4 += separation - 1
+	else:
+		n4 -= 1
+
+	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
+	sys.stdout.write("2-sided BFS iter " + str(i+1) + '   ' + progress + "\r")
+	sys.stdout.flush()
+avg4 = avg4 / n4
+end = time.time()
+diff4 = end - start
 print ""
 
 start = time.time()
@@ -36,7 +58,7 @@ n2 = n
 for i in xrange(n):
 	separation = len(search.aStar(graph.students[i],graph.students[i+1],graph, ))
 	if separation != 0:
-		avg2 += separation
+		avg2 += separation - 1
 	else:
 		n2 -= 1
 	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
@@ -48,7 +70,7 @@ diff2 = end - start
 print ""
 
 
-graph.train(400000)
+graph.train(500000)
 plt.figure(2)
 plt.title("Trained Locations")
 graph.plotStudents('gs', lines=False)
@@ -59,7 +81,7 @@ n3 = n
 for i in xrange(n):
 	separation = len(search.aStar(graph.students[i],graph.students[i+1],graph, ))
 	if separation != 0:
-		avg3 += separation
+		avg3 += separation - 1
 	else:
 		n3 -= 1
 	progress = '|' + '#' * int(float(i+1) / float(n) * 10) + ' '  * (10 - int(float(i+1) / float(n) * 10)) + '|'
@@ -70,10 +92,10 @@ end = time.time()
 diff3 = end - start
 print ""
 
-print "UCS -- Time:", diff1, " Avg:", avg1, " Iterations:", n
-print "aStar untrained -- Time:", diff2, " Avg:", avg2, " Iterations:", n
-print "aStar trained -- Time:", diff3, " Avg:", avg3, " Iterations:", n
-print "The average person has", graph.averageFriends(), "friends."
+print "BFS -- Time:", diff1, "Avg Separation:", avg1, "Iterations:", n
+print "2-sided BFS -- Time:", diff4, "Avg Separation:", avg4, "Iterations:", n
+print "aStar untrained -- Time:", diff2, "Avg Separation:", avg2, "Iterations:", n
+print "aStar trained -- Time:", diff3, "Avg Separation:", avg3, "Iterations:", n
 
 # print "creating graph"
 # G = nx.Graph()
