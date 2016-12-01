@@ -44,4 +44,5 @@ def aStar(s1,s2,graph):
 		for i in xrange(len(graph.adjMatrix[node[0]])):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
+
 	return []

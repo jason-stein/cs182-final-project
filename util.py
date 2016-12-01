@@ -106,4 +106,4 @@ def cartesianDistance(point1, point2):
     y1 = point1[1]
     x2 = point2[0]
     y2 = point2[1]
-    return ((x2-x1)**2 + (y2-y1)**2)**0.5
+    return (((x2-x1)**2 + (y2-y1)**2)**0.5) / (2**0.5)

@@ -5,13 +5,15 @@ import util
 import sys
 import math
 import matplotlib.pyplot as plt
+import snap
+import load
 
 # constants for probability increase on shared characteristics
-HOUSE_PROB_INC = .5
-INTEREST_PROB_INC = .1
-YEAR_PROB_INC = .2
-BASE_PROB = 0
-NSTUDENTS = 2000
+HOUSE_PROB_INC = .001
+INTEREST_PROB_INC = .0005
+YEAR_PROB_INC = .0005
+BASE_PROB = 0.0001
+NSTUDENTS = 4039
 
 # inverse square root of 2 -- bound for heuristic grid
 ISQR2 = 1 / math.sqrt(2.0)
@@ -106,6 +108,9 @@ class SocialGraph:
 	def prettyPrintHeuristic(self):
 		for i in self.heuristicMatrix:
 			print i
+
+	def loadAdjMatrix(self):
+		self.adjMatrix = load.loadFacebookGraph()
 
 	# trains the data set: for each iteration, finds random pair and updates
 	# distance based on friendship status
