@@ -16,7 +16,7 @@ MAJOR_PROB_INC = .2
 BASE_PROB = 0
 
 NMAJORS = 10
-NSTUDENTS = 500
+NSTUDENTS = 2000
 NINTERESTS = 200
 
 interests = {}
@@ -124,6 +124,7 @@ class SocialGraph:
 		for i in self.heuristicMatrix:
 			print i
 
+	# loads in the real Facebook dataset from https://snap.stanford.edu/data/egonets-Facebook.html
 	def loadAdjMatrix(self):
 		self.adjMatrix = load.loadFacebookGraph()
 

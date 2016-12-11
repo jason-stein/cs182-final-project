@@ -3,6 +3,7 @@
 import util
 import generate
 
+# Uniform Cost Search, effectively basic BFS for social graphs with uniform edge costs
 def UCS(s1,s2,graph):
 
 	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]))
@@ -22,6 +23,7 @@ def UCS(s1,s2,graph):
 				frontier.push((i, node[1] + [i]))
 	return []
 
+# A* heuristic search
 def aStar(s1,s2,graph):
 
 	frontier = util.PriorityQueueWithFunction(lambda x: len(x[1]) 
@@ -79,6 +81,7 @@ def BFS2(s1,s2,graph):
 
 	return []
 
+# Depth limited search
 def DLS(s1, s2, graph, depth):
 	frontier = util.Stack()
 	frontier.push((s1.id,[s1.id]))
@@ -94,6 +97,8 @@ def DLS(s1, s2, graph, depth):
 				frontier.push((i, node[1] + [i]))
 	return []
 
+# Iterative deepening depth first search, use 3 as initial depth because it is the average depth for 
+# the type of problems we are searching
 def IDDFS(s1, s2, graph):
 	depth = 3
 	result = DLS(s1, s2, graph, depth)

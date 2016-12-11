@@ -4,19 +4,15 @@ Goal: Improve upon naive-BFS on social graphs with a homemade, trained heuristic
 
 Run using `python app.py`.
 
-TODO:
+Implementations:
 - Graph generation
-  - Adjaceny list/matrix?
+  - Adjaceny list
   - Improve vectors of connection between people
-    - Dependent factors?
+    - Dependent factors
 - Heuristic training
   - Work on proving validity of heuristic
   - Improve dimensionality of heuristic space
 - Data visualization
 - Possible extensions: DLS, 2 sided-BFS
-
-Done:
 - Naive BFS implementation
 - A\* implementation
-- Basic graph generation
-- Basic heuristic training

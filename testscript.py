@@ -1,3 +1,5 @@
+# Script for testing issues with accuracy between searchAgents
+
 import generate as gen
 import searchAgents as search
 import random
