@@ -5,7 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 # import networkx as nx
 
-n = 25
+n = 50		# God save the Queen
 
 graph = generate.SocialGraph()
 plt.figure(1)

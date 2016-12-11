@@ -52,13 +52,14 @@ def BFS2(s1,s2,graph):
 	visited2 = set()
 	frontier1.push((s1.id,[s1.id]))
 	frontier2.push((s2.id,[s2.id]))
+
 	while not frontier1.isEmpty() and not frontier2.isEmpty():
 		node1 = frontier1.pop()
+		node2 = frontier2.pop()
 		if node1[0] in visited1:
 			continue
 		if node2[0] in visited2:
 			continue
-		node2 = frontier2.pop()
 		visited1.add(node1[0])
 		visited2.add(node2[0])
 		for i in frontier2.heap:
