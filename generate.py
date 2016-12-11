@@ -9,36 +9,51 @@ import snap
 import load
 
 # constants for probability increase on shared characteristics
-HOUSE_PROB_INC = .001
-INTEREST_PROB_INC = .0005
-YEAR_PROB_INC = .0005
-BASE_PROB = 0.0001
-NSTUDENTS = 4039
+HOUSE_PROB_INC = 0
+INTEREST_PROB_INC = 0.01
+MAJOR_PROB_INC = .25
+YEAR_PROB_INC = 0
+BASE_PROB = 0
 
-# inverse square root of 2 -- bound for heuristic grid
-ISQR2 = 1 / math.sqrt(2.0)
+NMAJORS = 10
+NSTUDENTS = 500
+NINTERESTS = 200
+
+interests = {}
+for i in xrange(NINTERESTS):
+	interests[i] = random.randint(10,50)
 
 # class for individual student -- contains attributes and location
 class Student:
 
 	def __init__(self):
-		self.id = 0
-		self.house = random.choice(["Adams","Cabot","Currier","Dunster","Eliot",
-			"Kirkland","Leverett","Lowell","Mather","Pforzheimer","Quincy",
-			"Winthrop"])
-		self.interest = random.choice(["academics","arts","sports"])
-		self.year = random.choice([17,18,19,20])
+		self.id = 0		# updated later
+		self.major = random.choice(range(NMAJORS))
+		self.interests = set()
+		for i in xrange(NINTERESTS):
+			if util.flipCoin(float(interests[i]) / float(NSTUDENTS)):
+				self.interests.add(i)
 		self.pos = [random.uniform(0,1), random.uniform(0,1)]
 
 # randomly decides if s1, s2 friends based on shared characteristics
 def maybeFriends(s1,s2):
-	p = BASE_PROB
-	if s1.house == s2.house:
-		p += HOUSE_PROB_INC
-	if s1.interest == s2.interest:
-		p += INTEREST_PROB_INC
-	if s1.year == s2.year:
-		p += YEAR_PROB_INC
+	# if s1.house == s2.house:
+	# 	p += HOUSE_PROB_INC
+	# if s1.interest == s2.interest:
+	# 	p += INTEREST_PROB_INC
+	# if s1.year == s2.year:
+	# 	p += YEAR_PROB_INC
+
+	p = 0
+	# interest based clustering: set of interests
+	# sharing smaller group increases friendship probability more
+	for interest in s1.interests:
+		if interest in s2.interests:
+			p += 1 / math.log(interests[interest]) * INTEREST_PROB_INC
+	
+	# major based clustering: unique major
+	if s1.major == s2.major:
+		p += MAJOR_PROB_INC
 	return util.flipCoin(p)
 
 # push students closer or farther depending on friendship status
@@ -47,7 +62,7 @@ def changeDistance(student1, student2, friends):
     dy = student2.pos[1] - student1.pos[1]
     change = 1.0
     if friends:
-        change = 0.9
+        change = 0.5
     else:
         change = 1.01
     new_dx = dx * change
@@ -116,7 +131,8 @@ class SocialGraph:
 	# distance based on friendship status
 	def train(self, iterations):
 		for i in xrange(iterations):
-			sys.stdout.write("Training: " + str(i+1) + "\r")
+			sys.stdout.write("Training: " + str(i+1) +"/" + 
+				str(iterations) + "\r")
 			sys.stdout.flush()
 			p1 = random.randint(0, len(self.students)-1)
 			p2 = random.randint(0, len(self.students)-1)
@@ -133,6 +149,7 @@ class SocialGraph:
 			self.heuristicMatrix[s1.id][s2.id] = \
 			self.heuristicMatrix[s2.id][s1.id] = \
 			util.cartesianDistance(s1.pos, s2.pos)
+		# normalize to max of 1 to ensure admissibility
 		maxDist = max(map(lambda x: max(x),self.heuristicMatrix))
 		for i in xrange(NSTUDENTS):
 			for j in xrange(NSTUDENTS):
@@ -140,9 +157,14 @@ class SocialGraph:
 		print ""
 
 	# plots each student's position as a point with customizable format string
-	def plotStudents(self,style):
+	def plotStudents(self,style='ro',lines=False):
 		xs = [student.pos[0] for student in self.students]
 		ys = [student.pos[1] for student in self.students]
+		if lines:
+			for i in xrange(NSTUDENTS):
+				for j in xrange(i):
+					if self.adjMatrix[i][j] == 1:
+						plt.plot(self.students[i].pos, self.students[j].pos,'b')
 		plt.plot(xs,ys,style)
 		minx = min(map(lambda x: x.pos[0], self.students))
 		maxx = max(map(lambda x: x.pos[0], self.students))
@@ -150,3 +172,11 @@ class SocialGraph:
 		maxy = max(map(lambda x: x.pos[1], self.students))
 		plt.axis([minx,maxx,miny,maxy])
 		plt.draw()
+
+	def averageFriends(self):
+		return float(sum(map(lambda x: sum(x), self.adjMatrix))) \
+			/ float(NSTUDENTS)
+
+	def averageInterests(self):
+		return float(sum(map(lambda x: len(x.interests), self.students))) \
+			/ float(NSTUDENTS)
