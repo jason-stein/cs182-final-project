@@ -5,6 +5,8 @@ import util
 import sys
 import math
 import matplotlib.pyplot as plt
+import snap
+import load
 
 # constants for probability increase on shared characteristics
 # HOUSE_PROB_INC = 0
@@ -14,7 +16,7 @@ MAJOR_PROB_INC = .2
 BASE_PROB = 0
 
 NMAJORS = 10
-NSTUDENTS = 2000
+NSTUDENTS = 500
 NINTERESTS = 200
 
 interests = {}
@@ -122,6 +124,9 @@ class SocialGraph:
 		for i in self.heuristicMatrix:
 			print i
 
+	def loadAdjMatrix(self):
+		self.adjMatrix = load.loadFacebookGraph()
+
 	# trains the data set: for each iteration, finds random pair and updates
 	# distance based on friendship status
 	def train(self, iterations):
@@ -175,4 +180,3 @@ class SocialGraph:
 	def averageInterests(self):
 		return float(sum(map(lambda x: len(x.interests), self.students))) \
 			/ float(NSTUDENTS)
-

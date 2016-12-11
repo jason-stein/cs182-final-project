@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 n = 50		# God save the Queen
 
 graph = generate.SocialGraph()
+# graph.loadAdjMatrix()
 plt.figure(1)
 plt.title("Untrained (Random) Locations")
 graph.plotStudents(lines=False)
@@ -20,6 +21,7 @@ n1 = n
 for i in xrange(n):
 	# separation = len(search.UCS(random.choice(graph.students),random.choice(graph.students),graph))
 	separation = len(search.UCS(graph.students[i],graph.students[i+1],graph))
+
 	if separation != 0:
 		avg1 += separation - 1
 	else:
@@ -38,7 +40,7 @@ avg4 = 0.0
 n4 = n
 for i in xrange(n):
 	# separation = len(search.UCS(random.choice(graph.students),random.choice(graph.students),graph))
-	separation = len(search.UCS(graph.students[i],graph.students[i+1],graph))
+	separation = len(search.BFS2(graph.students[i],graph.students[i+1],graph))
 	if separation != 0:
 		avg4 += separation - 1
 	else:
@@ -56,7 +58,8 @@ start = time.time()
 avg2 = 0.0
 n2 = n
 for i in xrange(n):
-	separation = len(search.aStar(graph.students[i],graph.students[i+1],graph, ))
+	s = search.aStar(graph.students[i],graph.students[i+1],graph)
+	separation = len(s)
 	if separation != 0:
 		avg2 += separation - 1
 	else:
@@ -97,14 +100,14 @@ print "2-sided BFS -- Time:", diff4, "Avg Separation:", avg4, "Iterations:", n
 print "A* untrained -- Time:", diff2, "Avg Separation:", avg2, "Iterations:", n
 print "A* trained -- Time:", diff3, "Avg Separation:", avg3, "Iterations:", n
 
-# print "creating graph"
-# G = nx.Graph()
-# for i in xrange(generate.NSTUDENTS):
-# 	G.add_node(i)
-# 	for j in xrange(i):
-# 		if graph.adjMatrix[i][j] == 1:
-# 			G.add_edge(i,j)
-# plt.figure(3)
-# nx.draw(G)
+print "creating graph"
+G = nx.Graph()
+for i in xrange(generate.NSTUDENTS):
+	G.add_node(i)
+	for j in xrange(i):
+		if graph.adjMatrix[i][j] == 1:
+			G.add_edge(i,j)
+plt.figure(3)
+nx.draw(G)
 
 plt.show()

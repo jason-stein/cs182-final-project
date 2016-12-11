@@ -41,6 +41,7 @@ def aStar(s1,s2,graph):
 		for i in xrange(generate.NSTUDENTS):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
+
 	return []
 
 # 2-sided BFS (expands out from both nodes)
@@ -75,4 +76,40 @@ def BFS2(s1,s2,graph):
 				frontier1.push((i, node1[1] + [i]))
 			if graph.adjMatrix[node2[0]][i] == 1:
 				frontier2.push((i, node2[1] + [i]))
+
+	return []
+
+def DLS(s1, s2, graph, depth):
+	frontier = util.Stack()
+	frontier.push((s1.id,[s1.id]))
+
+	while not frontier.isEmpty():
+		node = frontier.pop()
+		if node[0] in node[1][:-1] or len(node[1]) > depth:
+			continue
+		if node[0] == s2.id:
+			return node[1]
+		for i in xrange(generate.NSTUDENTS):
+			if graph.adjMatrix[node[0]][i] == 1:
+				frontier.push((i, node[1] + [i]))
+	return []
+
+def IDDFS(s1, s2, graph):
+	depth = 3
+	result = DLS(s1, s2, graph, depth)
+	if result:
+		while depth > 0:
+			depth -= 1
+			tmp = DLS(s1, s2, graph, depth)
+			if tmp:
+				result = tmp
+			else:
+				break
+		return result
+	else:
+		while not result:
+			depth += 1
+			result = DLS(s1, s2, graph, depth)
+		return result
+
 	return []
