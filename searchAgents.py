@@ -22,7 +22,7 @@ def BFS(s1,s2,graph):
 		for i in xrange(generate.NSTUDENTS):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
-	return []
+	return ([],0)
 
 # A* heuristic search
 def aStar(s1,s2,graph):
@@ -45,7 +45,7 @@ def aStar(s1,s2,graph):
 		for i in xrange(generate.NSTUDENTS):
 			if graph.adjMatrix[node[0]][i] == 1:
 				frontier.push((i, node[1] + [i]))
-	return []
+	return ([],0)
 
 # 2-sided BFS (expands out from both nnodes)
 def BFS2(s1,s2,graph):
@@ -90,16 +90,18 @@ def BFS2(s1,s2,graph):
 			for i in xrange(generate.NSTUDENTS):
 				if graph.adjMatrix[node2[0]][i] == 1:
 					frontier2.push((i, node2[1] + [i]))
+	return ([],0)
 
 # Depth limited search
 def DLS(s1, s2, graph, depth):
 	frontier = util.Stack()
 	frontier.push((s1.id,[s1.id]))
-
+	nnodes = 0
 	while not frontier.isEmpty():
 		node = frontier.pop()
 		if node[0] in node[1][:-1] or len(node[1]) > depth:
 			continue
+		nnodes += 1
 		if node[0] == s2.id:
 			return node[1]
 		for i in xrange(generate.NSTUDENTS):
