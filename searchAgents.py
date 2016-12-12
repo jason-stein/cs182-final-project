@@ -96,12 +96,11 @@ def BFS2(s1,s2,graph):
 def DLS(s1, s2, graph, depth):
 	frontier = util.Stack()
 	frontier.push((s1.id,[s1.id]))
-	nnodes = 0
+
 	while not frontier.isEmpty():
 		node = frontier.pop()
 		if node[0] in node[1][:-1] or len(node[1]) > depth:
 			continue
-		nnodes += 1
 		if node[0] == s2.id:
 			return node[1]
 		for i in xrange(generate.NSTUDENTS):
