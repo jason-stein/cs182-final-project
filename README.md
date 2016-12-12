@@ -1,6 +1,6 @@
 # cs182-final-project
 
-Goal: Improve upon naive-BFS on social graphs with a homemade, trained heuristic (taking inspiration from clustering).
+Goal: Investigate alternatives to basic BFS for social graph search.
 
 Run using `python app.py`.
 
