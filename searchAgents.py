@@ -50,32 +50,41 @@ def aStar(s1,s2,graph):
 # 2-sided BFS (expands out from both nnodes)
 def BFS2(s1,s2,graph):
 	nnodes = 0
+	# set up two of every data structure needed for BFS
 	frontier1 = util.PriorityQueueWithFunction(lambda x: len(x[1]))
 	frontier2 = util.PriorityQueueWithFunction(lambda x: len(x[1]))
 	visited1 = set()
 	visited2 = set()
 	frontier1.push((s1.id,[s1.id]))
 	frontier2.push((s2.id,[s2.id]))
+	# we will expand one layer from each node at a time
 	curLen = 1
 
 	while not frontier1.isEmpty() and not frontier2.isEmpty():
+		# expand a layer from person 1
 		while True:
 			node1 = frontier1.pop()
+			# switch sides if we are entering the next layer
 			if len(node1[1]) != curLen:
 				frontier1.push(node1)
 				break
 			if node1[0] in visited1:
 				continue
 			nnodes += 1
+			# check this node against the entire frontier2
 			for i in frontier2.heap:
 				if node1[0] == i[2][0]:
+					# path is (path to midpoint) + (path from mid to person 2)
 					i[2][1].reverse()
 					return (node1[1] + i[2][1][1:],nnodes)
+			# queue all children
 			for i in xrange(generate.NSTUDENTS):
 				if graph.adjMatrix[node1[0]][i] == 1:
 					frontier1.push((i, node1[1] + [i]))
+		# expand same layer for person 2
 		while True:
 			node2 = frontier2.pop()
+			# switch sides and move to next layer
 			if len(node2[1]) != curLen:
 				frontier2.push(node2)
 				curLen += 1
@@ -83,10 +92,13 @@ def BFS2(s1,s2,graph):
 			if node2[0] in visited2:
 				continue
 			nnodes += 1
+			# check in frontier1
 			for i in frontier1.heap:
 				if i[2][0] == node2[0]:
+					# path is (path to midpoint) + (path from mid to person 2)
 					node2[1].reverse()
 					return (i[2][1] + node2[1][1:],nnodes)
+			# queue all children
 			for i in xrange(generate.NSTUDENTS):
 				if graph.adjMatrix[node2[0]][i] == 1:
 					frontier2.push((i, node2[1] + [i]))
