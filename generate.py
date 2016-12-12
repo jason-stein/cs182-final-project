@@ -5,13 +5,13 @@ import util
 import sys
 import math
 import matplotlib.pyplot as plt
-import snap
-import load
+# import snap
+# import load
 
 # constants for probability increase on shared characteristics
 # HOUSE_PROB_INC = 0
-INTEREST_PROB_INC = 0.05
-MAJOR_PROB_INC = .2
+INTEREST_PROB_INC = 0.01
+MAJOR_PROB_INC = .25
 # YEAR_PROB_INC = 0
 BASE_PROB = 0
 
@@ -21,7 +21,7 @@ NINTERESTS = 200
 
 interests = {}
 for i in xrange(NINTERESTS):
-	interests[i] = random.randint(20,60)
+	interests[i] = random.randint(10,50)
 
 # class for individual student -- contains attributes and location
 class Student:
