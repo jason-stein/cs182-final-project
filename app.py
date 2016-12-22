@@ -5,7 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 # import networkx as nx
 
-n = 50	# number of iterations of each algorithm
+n = 20	# number of iterations of each algorithm
 
 # generate a social graph
 graph = generate.SocialGraph()

@@ -9,10 +9,8 @@ import matplotlib.pyplot as plt
 # import load
 
 # constants for probability increase on shared characteristics
-# HOUSE_PROB_INC = 0
-INTEREST_PROB_INC = 0.01
-MAJOR_PROB_INC = .25
-# YEAR_PROB_INC = 0
+INTEREST_PROB_INC = 0.02
+MAJOR_PROB_INC = .35
 BASE_PROB = 0
 
 NMAJORS = 10
@@ -37,13 +35,6 @@ class Student:
 
 # randomly decides if s1, s2 friends based on shared characteristics
 def maybeFriends(s1,s2):
-	# if s1.house == s2.house:
-	# 	p += HOUSE_PROB_INC
-	# if s1.interest == s2.interest:
-	# 	p += INTEREST_PROB_INC
-	# if s1.year == s2.year:
-	# 	p += YEAR_PROB_INC
-
 	p = 0
 	# interest based clustering: set of interests
 	# sharing smaller group increases friendship probability more
@@ -69,14 +60,6 @@ def changeDistance(student1, student2, friends):
     new_dy = dy * change
     new_x = student1.pos[0] + new_dx
     new_y = student1.pos[1] + new_dy
-    # if new_x > ISQR2:
-    #     new_x = ISQR2
-    # if new_x < 0.0:
-    #     new_x = 0.0
-    # if new_y > ISQR2:
-    #     new_y = ISQR2
-    # if new_y < 0.0:
-    #     new_y = 0.0
 
     student2.pos = [new_x, new_y] 
 
